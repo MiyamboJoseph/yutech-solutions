@@ -22,3 +22,12 @@ Relative asset paths support a project URL such as `/yutech-solutions/`.
 No tokens, server credentials or backend services are needed in the website.
 The local `.openai/` metadata belongs to the earlier Sites registration and is
 excluded from this GitHub repository.
+
+## Search visibility and sharing
+The page includes canonical metadata, Open Graph and X/Twitter preview metadata, Organization/WebSite JSON-LD, and a sitemap at https://miyambojoseph.github.io/yutech-solutions/sitemap.xml. The site is one HTML page, so section anchors are not separate sitemap entries.
+
+Owner action: open https://search.google.com/search-console/ and add the URL-prefix property https://miyambojoseph.github.io/yutech-solutions/. Choose HTML tag verification and provide the verification tag for insertion into index.html (or supply the Google verification HTML file). After verifying, submit sitemap.xml and use URL Inspection to request indexing of the homepage. Never share a Google password or access token.
+
+No Search Console verification or indexing request has been performed. Indexing and ranking are not guaranteed. Social platforms may cache older link previews.
+
+GitHub Pages serves this project under /yutech-solutions/. A robots.txt placed inside that subdirectory would not control crawling: robots.txt must be at the hostname root. This repository does not control that root, so no misleading project-scoped robots.txt is included. Revisit the canonical URLs, sitemap, structured data and root robots.txt when moving to a custom domain.
