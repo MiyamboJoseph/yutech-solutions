@@ -18,18 +18,44 @@
   });
   const form = document.querySelector('#enquiry-form');
   let draft = '';
-  form.addEventListener('submit', event => {
+  let sending = false;
+  form.addEventListener('submit', async event => {
     event.preventDefault();
-    if (!form.reportValidity()) return;
+    if (sending || !form.reportValidity()) return;
     const values = new FormData(form);
-    const name = String(values.get('name')).trim();
-    const email = String(values.get('email')).trim();
-    const message = String(values.get('message')).trim();
+    const name = String(values.get('name') || '').trim();
+    const email = String(values.get('email') || '').trim();
+    const message = String(values.get('message') || '').trim();
     if (!name || !message) { form.querySelector(!name ? '[name="name"]' : '[name="message"]').focus(); return; }
+    if (values.get('_honey')) return;
     const interest = String(values.get('interest'));
     draft = `Hello YUTECH SOLUTIONS,\n\n${message}\n\nTopic: ${interest}\nName: ${name}\nEmail: ${email}`;
-    document.querySelector('#email-fallback').hidden = false;
-    window.location.href = `mailto:yutech075@gmail.com?subject=${encodeURIComponent(`Yutech enquiry: ${interest}`)}&body=${encodeURIComponent(draft)}`;
+    const status = document.querySelector('#enquiry-status');
+    const button = form.querySelector('button[type="submit"]');
+    sending = true; button.disabled = true; button.textContent = 'Sending…';
+    form.setAttribute('aria-busy', 'true');
+    status.textContent = 'Sending your enquiry…';
+    document.querySelector('#email-fallback').hidden = true;
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 20000);
+    try {
+      const response = await fetch('https://formsubmit.co/ajax/yutech075@gmail.com', {
+        method: 'POST', headers: {'Content-Type': 'application/json', Accept: 'application/json'},
+        signal: controller.signal,
+        body: JSON.stringify({name, email, message, interest, _subject: 'New YUTECH SOLUTIONS website enquiry', _template: 'table', _honey: ''})
+      });
+      const result = await response.json();
+      if (!response.ok || !(result.success === true || result.success === 'true')) throw new Error('Submission rejected');
+      status.textContent = /activat|confirm.*email|verify/i.test(String(result.message || ''))
+        ? 'The enquiry service needs email verification by YUTECH SOLUTIONS. Please contact us by WhatsApp or email for now.'
+        : 'Your enquiry has been accepted for delivery. Thank you for contacting YUTECH SOLUTIONS.';
+    } catch (_) {
+      status.textContent = 'We could not confirm delivery. Your message is still here. Please contact us by WhatsApp or copy your enquiry and email it. If you retry, a duplicate may be sent.';
+      document.querySelector('#email-fallback').hidden = false;
+    } finally {
+      clearTimeout(timeout); sending = false; button.disabled = false;
+      button.textContent = 'Send enquiry'; form.removeAttribute('aria-busy');
+    }
   });
   document.querySelector('#copy-enquiry').addEventListener('click', async () => {
     const status = document.querySelector('#copy-status');
