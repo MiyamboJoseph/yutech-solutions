@@ -26,8 +26,15 @@ excluded from this GitHub repository.
 ## Search visibility and sharing
 The page includes canonical metadata, Open Graph and X/Twitter preview metadata, Organization/WebSite JSON-LD, and a sitemap at https://miyambojoseph.github.io/yutech-solutions/sitemap.xml. The site is one HTML page, so section anchors are not separate sitemap entries.
 
-Owner action: open https://search.google.com/search-console/ and add the URL-prefix property https://miyambojoseph.github.io/yutech-solutions/. Choose HTML tag verification and provide the verification tag for insertion into index.html (or supply the Google verification HTML file). After verifying, submit sitemap.xml and use URL Inspection to request indexing of the homepage. Never share a Google password or access token.
+Owner action: open https://search.google.com/search-console/ and add the URL-prefix property https://miyambojoseph.github.io/yutech-solutions/. The repository already includes a Google HTML verification file. If it belongs to your Search Console property, publish it and use the HTML file verification method. Otherwise, supply the verification file or HTML tag issued for your property. After verifying, submit sitemap.xml and use URL Inspection to request indexing of the homepage. Never share a Google password or access token.
 
-No Search Console verification or indexing request has been performed. Indexing and ranking are not guaranteed. Social platforms may cache older link previews.
+A Google ownership verification file (`dist/googlee6dfb07e384c363c.html`) is included. Successful Search Console verification and an indexing request have not been confirmed. Indexing and ranking are not guaranteed. Social platforms may cache older link previews.
 
 GitHub Pages serves this project under /yutech-solutions/. A robots.txt placed inside that subdirectory would not control crawling: robots.txt must be at the hostname root. This repository does not control that root, so no misleading project-scoped robots.txt is included. Revisit the canonical URLs, sitemap, structured data and root robots.txt when moving to a custom domain.
+
+## Maintenance checks
+
+- Keep EatPay stage and onboarding statements aligned with the product’s actual status; review the product section, case study and FAQ together.
+- Keep logo assets sized for their use: the company logo is 512 × 512 for sharing and display; the EatPay logo is 128 × 128 for its 40–48 px display. Original versions remain in Git history.
+- After form changes, check success, pending activation, rejection, network failure and timeout. Confirm fields are retained and duplicate submissions are blocked while sending.
+- Confirm actual inbox delivery separately after deployment; mocked checks do not contact FormSubmit.

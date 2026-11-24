@@ -124,7 +124,7 @@
 
     catch (_) {
 
-      const area = document.createElement('textarea'); area.value = draft; area.setAttribute('aria-label', 'Your enquiry â€” select and copy'); area.readOnly = true;
+      const area = document.createElement('textarea'); area.value = draft; area.setAttribute('aria-label', 'Your enquiry — select and copy'); area.readOnly = true;
 
       const existing = document.querySelector('#manual-copy'); if (existing) existing.remove();
 
